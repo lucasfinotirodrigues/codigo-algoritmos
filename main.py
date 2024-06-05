@@ -16,16 +16,15 @@ from time import sleep
 listaVertices = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 arquivo = '_database.json'
 
-print("--=--=--=--=--=--=--=--=--=--=--")
-print(" -(=)- Python Graph Menu -(=)- ")
-print("--=--=--=--=--=--=--=--=--=--=--")
+print(" --=--=--=--=--=--=--=--=--=--=--")
+print("|     Python Menu de grafos     |")
+print(" --=--=--=--=--=--=--=--=--=--=--")
 print()
-print("Desenvolvido por: Gabriel Calil")
 input("Prescione ENTER para continuar")
 limpaTela()
 
 print("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-print(" --=-- Algoritmos Avançados --=-- ")
+print("|  Algoritmos Avançados          |")
 print("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
 print(" ")
 print("Como deseja seu grafo?")
