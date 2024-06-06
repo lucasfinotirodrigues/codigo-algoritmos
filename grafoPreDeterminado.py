@@ -1,16 +1,18 @@
 from exibeGrafo import exibir_grafo
 import os
 
-def grafo_pre_determinado():    # Função para utilizar um grafo pré determinado
+def grafo_pre_determinado(): 
         
-    grafo = {
-        'A': ['B', 'C'],
-        'B': ['A', 'D', 'E'],
-        'C': ['A', 'F'],
-        'D': ['B'],
-        'E': ['B', 'F'],
-        'F': ['C', 'E']
-    }
+    grafo = [
+        [0, 1, 1, 1, 1, 1, 0, 0],
+        [0, 0, 1, 1, 0, 0, 1, 0],
+        [0, 0, 0, 1, 1, 1, 0, 1],
+        [0, 0, 0, 0, 1, 0, 1, 0],
+        [0, 0, 0, 0, 0, 1, 0, 1],
+        [0, 0, 0, 0, 0, 0, 1, 1],
+        [0, 0, 0, 0, 0, 0, 0, 1],
+        [0, 0, 0, 0, 0, 0, 0, 0]
+    ]
 
     exibir_grafo(grafo)
 
