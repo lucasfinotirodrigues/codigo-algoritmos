@@ -1,12 +1,11 @@
-def exibir_grafo(grafo):    # Função para exibir os grafos de forma mais apresentavel
-    print("Seu Grafo: ")
-    for vertice, vizinho in grafo.items():
-        print(f"{vertice}: {', '.join(vizinho)}")
+def exibir_grafo(grafo):
+    print("Grafo:")
+    for i, linha in enumerate(grafo):
+        conexoes = [str(j) for j, val in enumerate(linha) if val]
+        print(f"{i} -> {' '.join(conexoes)}")
 
-def exibir_grafo_com_pesos(grafo):  # Função para exibir os grafos com peso de forma mais apresentavel
-    print("Seu Grafo com Pesos:")
-    for vertice, vizinhos in grafo.items():
-        print(f"{vertice}:", end=' ')
-        for vizinho, peso in vizinhos:
-            print(f"({vizinho} - {peso})", end=' ')
-        print()
+def exibir_grafo_com_pesos(grafo):
+    print("Grafo com Pesos:")
+    for i, linha in enumerate(grafo):
+        conexoes = [(j, peso) for j, peso in enumerate(linha) if peso]
+        print(f"{i} -> {conexoes}")

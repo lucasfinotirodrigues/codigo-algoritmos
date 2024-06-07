@@ -1,8 +1,3 @@
-from limpaTela import limpaTela
-from exibeGrafo import exibir_grafo
-import os
-from time import sleep
-
 def busca_por_profundidade(grafo, lista_vertices):
 
     print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
@@ -14,39 +9,36 @@ def busca_por_profundidade(grafo, lista_vertices):
     print("e imprime o resultado.")
     print("")
     input("Prescione ENTER para continuar")
-    limpaTela()
 
-    exibir_grafo(grafo)
-    print(" ")
 
-    while True:
-        vertice_inicial = input("Realizar busca por profundidade a partir de qual vértice? ")
-        vertice_inicial = vertice_inicial.upper()
+    origem = input("Informe o vértice de origem: ").upper()
+    destino = input("Informe o vértice de destino: ").upper()
 
-        if vertice_inicial not in lista_vertices:
-            limpaTela()
-            print("O vértice não está no grafo")
-            sleep(1)
-            limpaTela()
-            exibir_grafo(grafo)
-            print(" ")
-            vertice_inicial = input("Realizar busca por profundidade a partir de qual vértice? ")
-            vertice_inicial = vertice_inicial.upper()
-        else:
-            limpaTela()
-            print(" ")
-            break
-        
-    visitados = set() # Lista para armazenar os vértices visitados durante a busca
+    if origem not in grafo or destino not in grafo:
+        print("Vértice inválido!")
+        return
 
-    def busca(vertice):
-        nonlocal visitados
-        visitados.add(vertice)     # Adiciona o vértice a lista de visitados
-        print(vertice, end=' ')         # E o imprime na tela
+    caminho = []
+    visitados = set()
 
-        for vizinho in grafo[vertice]:   # Percorre os vizinhos do vértice 
-            if vizinho not in visitados:    # Realiza a busca em profundidade para os vizinhos não visitados
-                busca(vizinho)
+    def dfs(v, destino):
+        caminho.append(v)
+        visitados.add(v)
 
-    print("Busca em Profundidade a partir do vértice '{}': ".format(vertice_inicial))
-    busca(vertice_inicial)
+        if v == destino:
+            return True
+
+        for vizinho in grafo[v]:
+            if isinstance(vizinho, tuple):
+                vizinho = vizinho[0]
+            if vizinho not in visitados:
+                if dfs(vizinho, destino):
+                    return True
+
+        caminho.pop()
+        return False
+
+    if dfs(origem, destino):
+        print("Caminho encontrado:", ' -> '.join(caminho))
+    else:
+        print("Não há caminho entre os vértices.")

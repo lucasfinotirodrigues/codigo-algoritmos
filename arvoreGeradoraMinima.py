@@ -1,9 +1,3 @@
-from limpaTela import limpaTela
-from adicionaPeso import adicionar_pesos_aleatorios
-from exibeGrafo import exibir_grafo_com_pesos
-import os
-from time import sleep
-
 def arvore_geradora_minima(grafo, lista_vertices):
 
     print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")
@@ -17,31 +11,34 @@ def arvore_geradora_minima(grafo, lista_vertices):
     print("aleatórios para cada aresta do seu grafo.")
     print("")
     input("Prescione ENTER para continuar")
-    limpaTela()
+    vertices = set(grafo)
+    edges = [(weight, u, v) for u in grafo for v, weight in grafo[u]]
 
-    exibir_grafo_com_pesos(grafo)
-    print(" ")
-    sleep(1)
+    parent = {v: v for v in vertices}
+    rank = {v: 0 for v in vertices}
 
-    arvore_geradora = set()
-    vertices = list(grafo.keys())
-    visitados = set()
+    def find(v):
+        if parent[v] != v:
+            parent[v] = find(parent[v])
+        return parent[v]
 
-    vertice_inicial = vertices[0]   
-    visitados.add(vertice_inicial)
+    def union(u, v):
+        root_u = find(u)
+        root_v = find(v)
+        if root_u != root_v:
+            if rank[root_u] > rank[root_v]:
+                parent[root_v] = root_u
+            else:
+                parent[root_u] = root_v
+                if rank[root_u] == rank[root_v]:
+                    rank[root_v] += 1
 
-    while len(visitados) < len(vertices):   # Enquanto houver vértices não visitados
-        menor_peso = float('inf')
-        aresta_menor_peso = None
+    edges.sort()
+    mst = set()
 
-        for vertice_visitado in visitados:       # Percorre os vértices visitados
-            for vizinho, peso in grafo[vertice_visitado]:   # Percorre os vizinhos e pesos das arestas do vértice visitado
-                if vizinho not in visitados and peso < menor_peso:  # Verifica se o vizinho não foi visitado e se o peso é menor que o menor peso registrado
-                    menor_peso = peso
-                    aresta_menor_peso = (vertice_visitado, vizinho)
+    for weight, u, v in edges:
+        if find(u) != find(v):
+            union(u, v)
+            mst.add((u, v, weight))
 
-        if aresta_menor_peso:    # Se houver uma aresta com menor peso, adiciona na árvore geradora mínima e marca o vértice vizinho como visitado
-            arvore_geradora.add(aresta_menor_peso)
-            visitados.add(aresta_menor_peso[1])
-
-    return arvore_geradora  # Retorna a árvore geradora mínima encontrada
+    return mst

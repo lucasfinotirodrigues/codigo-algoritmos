@@ -1,1 +1,0 @@
-[{"nome": "Grafo Teste 1", "grafo": {"A": ["B"], "B": ["A", "C"], "C": ["B"]}, "pesos": false}]

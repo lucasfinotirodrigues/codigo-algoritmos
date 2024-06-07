@@ -1,56 +1,51 @@
-import sys
+import heapq
+from exibeGrafo import exibir_grafo_com_pesos
 
-class Graph:
-    def __init__(self, vertices):
-        self.V = vertices
-        self.graph = [[0] * vertices for _ in range(vertices)]
+def algoritmo_dijkstra(grafo, lista_vertices, src):
+    print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")
+    print(" -=- Algoritmo Menor Caminho -=- ")
+    print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")
+    print(" ")
+    print("Utilizaremos o algoritmo de Dijkstra para calcular o menor caminho de um vértice de origem para todos os outros vértices do grafo.")
+    print("")
+    input("Pressione ENTER para continuar")
+    exibir_grafo_com_pesos(grafo)
+    print(" ")
 
-    def add_edge(self, u, v, weight):
-        self.graph[u][v] = weight
-        self.graph[v][u] = weight  
+    n = len(grafo)
+    dist = {vertice: float('inf') for vertice in grafo}
+    dist[lista_vertices[src]] = 0
+    prev = {vertice: None for vertice in grafo}
 
-    def min_distance(self, dist, visited):
-        min_dist = sys.maxsize
-        min_index = 0
+    pq = [(0, lista_vertices[src])]
+    heapq.heapify(pq)
 
-        for v in range(self.V):
-            if dist[v] < min_dist and not visited[v]:
-                min_dist = dist[v]
-                min_index = v
+    while pq:
+        current_dist, u = heapq.heappop(pq)
+        
+        if current_dist > dist[u]:
+            continue
 
-        return min_index
+        for neighbor, weight in grafo[u]:
+            distance = current_dist + weight
 
-    def dijkstra(self, src):
-        dist = [sys.maxsize] * self.V
-        dist[src] = 0
-        visited = [False] * self.V
+            if distance < dist[neighbor]:
+                dist[neighbor] = distance
+                prev[neighbor] = u
+                heapq.heappush(pq, (distance, neighbor))
 
-        for _ in range(self.V):
-            u = self.min_distance(dist, visited)
-            visited[u] = True
+    print(f"Distâncias a partir do vértice {lista_vertices[src]}:")
+    for vertice in dist:
+        print(f"Distância até {vertice}: {dist[vertice]}")
+    print(" ")
 
-            for v in range(self.V):
-                if (not visited[v] and self.graph[u][v] and
-                        dist[u] + self.graph[u][v] < dist[v]):
-                    dist[v] = dist[u] + self.graph[u][v]
-
-        self.print_solution(dist)
-
-    def print_solution(self, dist):
-        print("Vertice \tDistancia do vertice de origem")
-        for node in range(self.V):
-            print(node, "\t\t", dist[node])
-
-# Exemplo de utilização
-g = Graph(6)
-g.add_edge(0, 1, 7)
-g.add_edge(0, 2, 9)
-g.add_edge(0, 5, 14)
-g.add_edge(1, 2, 10)
-g.add_edge(1, 3, 15)
-g.add_edge(2, 3, 11)
-g.add_edge(2, 5, 2)
-g.add_edge(3, 4, 6)
-g.add_edge(4, 5, 9)
-
-g.dijkstra(0)
+    print("Caminhos:")
+    for vertice in prev:
+        if prev[vertice] is not None:
+            path = []
+            step = vertice
+            while step is not None:
+                path.append(step)
+                step = prev[step]
+            print(f"Caminho até {vertice}: {' -> '.join(path[::-1])}")
+    input("Pressione ENTER para continuar")
