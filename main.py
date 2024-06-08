@@ -1,6 +1,7 @@
 from grafoPreDeterminado import grafo_pre_determinado
-from grafoHamiltoniano import gerar_grafo_hamiltoniano, verificar_caminho_hamiltoniano
-from exibeGrafo import exibir_grafo, exibir_grafo_com_pesos
+from grafoHamiltoniano import gerar_grafo_hamiltoniano
+from exibeGrafo import exibir_grafo
+from hamiltoniano import grafo_hamiltoniano
 from limpaTela import limpaTela
 from adicionaPeso import adicionar_pesos_aleatorios
 from buscaLargura import busca_por_largura
@@ -9,7 +10,7 @@ from arvoreGeradoraMinima import arvore_geradora_minima
 from algoritmosGulosos import busca_gulosa_kruskal
 from ordenacaoTopologica import ordenacao_topologica
 from algoritmoMenorcaminhoDijkstra import algoritmo_dijkstra
-from algoritmoparaColoracao import algoritmo_coloracao
+from algoritmoparaColoracao import colorir_grafo
 
 import os
 from time import sleep
@@ -57,7 +58,8 @@ def main():
 
         if tipo_algoritmo == 2:
             grafo = gerar_grafo_hamiltoniano()
-            caminho_hamiltoniano = verificar_caminho_hamiltoniano(grafo)
+            caminho_hamiltoniano = grafo_hamiltoniano(grafo)
+
             if caminho_hamiltoniano:
                 print("Existe um caminho hamiltoniano no grafo.")
             else:
@@ -69,7 +71,7 @@ def main():
             elif tipo_algoritmo == 3:
                 caminho_menor = busca_por_largura(grafo, lista_vertices)
                 if caminho_menor:
-                    exibir_grafo(grafo)
+                    # exibir_grafo(grafo)
                     print(" ")
                     print("Caminho mais curto entre os vértices selecionados:", ' -> '.join(caminho_menor))
                     print(" ")
@@ -93,11 +95,10 @@ def main():
                     print("Ordenação Topológica:")
                     print(topologica)
             elif tipo_algoritmo == 7:
-                num_cores = int(input("Informe o número de cores: "))
-                algoritmo_coloracao(grafo, lista_vertices, num_cores)
+                colorir_grafo(grafo)
             elif tipo_algoritmo == 8:
-                src = int(input("Informe o vértice de origem (índice): "))
-                algoritmo_dijkstra(grafo, lista_vertices, src)
+                src = str(input("Informe o vértice de origem (índice): "))
+                algoritmo_dijkstra(grafo, src)
 
         input("Pressione ENTER para voltar ao menu principal")
 

@@ -9,3 +9,4 @@ def adicionar_pesos_aleatorios(grafo):
                 peso = randint(1, 10)
                 grafo[vertice][i] = (vizinho, peso)
                 grafo[vizinho].append((vertice, peso))
+    return grafo

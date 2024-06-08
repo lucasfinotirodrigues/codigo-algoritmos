@@ -34,23 +34,10 @@ def ordenacao_topologica(grafo, pre_determinado):
             print("Seu Grafo pré determinado possui um ciclo!")
             print("A Ordenação Topológica não funciona em grafos com ciclos.")
             print(" ")
-            escolha = input("Gostaria que trocasse-mos seu grafo por um sem ciclos? [S/N]")
-            escolha = escolha.upper()
-
-            if (escolha != 'S' and escolha != 'N'):
-                print(" ")
-                print("Escolha Invalida!")
-                limpaTela()
-                sleep(1)
-            else:
-                if (escolha == 'S'):
-                    grafo = novo_grafo
-                    break
-                else:
-                    break
+            break
 
     limpaTela()                  
-    exibir_grafo(grafo)
+    # exibir_grafo(grafo)
     print(" ")
 
     visitados = set()   # Conjunto que armazenará os vértices visitados

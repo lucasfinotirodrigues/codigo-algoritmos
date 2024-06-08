@@ -21,7 +21,7 @@ def busca_gulosa_kruskal(grafo):
     input("Pressione ENTER para continuar")
     limpaTela()
 
-    exibir_grafo_com_pesos(grafo)
+    # exibir_grafo_com_pesos(grafo)
     print(" ")
     sleep(1)
 
